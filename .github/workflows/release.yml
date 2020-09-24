@@ -38,10 +38,22 @@ jobs:
         run: |
           cd Era.js\Next\FrontEnd
           npm run setup
+          npx electron-builder --dir
+          dir
+          tree
 
       - name: Setup Back-End Enviroment
         run: |
+          cd Era.js\Next\BackEnd
+          python setup.py build
           dir
+          tree
+
+      - name: Assemble SDK
+        run: echo
+
+      - name: Release
+        run: echo
 
   Windows-x86:
     runs-on: windows-latest
