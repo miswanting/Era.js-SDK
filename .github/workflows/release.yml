@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-      - dev
-    # tags:
-    #   - v*
 
 jobs:
   Windows-x64:
@@ -51,7 +48,6 @@ jobs:
           Remove-Item Era.js-SDK\prebuilt\*.* -Recurse
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked Era.js-SDK\prebuilt\ /E
           Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK-v$date.x64.zip" -CompressionLevel Optimal
-          dir
 
       - name: Create Release
         id: create_release
