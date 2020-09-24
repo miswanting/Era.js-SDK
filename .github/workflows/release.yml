@@ -46,6 +46,7 @@ jobs:
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
           Remove-Item Era.js-SDK\prebuilt\*
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked\ Era.js-SDK\prebuilt\ /E
+          echo ${{ github.ref }}
           Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-${{ github.ref }}.zip -CompressionLevel Optimal
 
       - name: Create Release
