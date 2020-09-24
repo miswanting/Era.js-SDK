@@ -48,7 +48,7 @@ jobs:
           $date = Get-Date -Format "yyddMM"
           echo "::set-env name=DATE::$date"
           Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK v${{ env.date }}.zip" -CompressionLevel Optimal
-          Write-Output "Era.js-SDK v${{ env.DATE }}.zip"
+          Write-Output "Era.js-SDK v$DATE.zip"
           Write-Output "$DATE"
 
       - name: Create Release
