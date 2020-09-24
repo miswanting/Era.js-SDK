@@ -2,6 +2,8 @@ name: Release Bot
 
 on:
   push:
+    tag:
+      - v*
     branches:
       - master
       - dev
@@ -47,41 +49,29 @@ jobs:
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked Era.js-SDK\prebuilt\ /E
           $date = Get-Date -Format "yyddMM"
           echo "::set-env name=DATE::$date"
-          Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK v${{ env.date }}.zip" -CompressionLevel Optimal
-          Write-Output "Era.js-SDK v$DATE.zip"
-          Write-Output "$DATE"
+          Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK amd64.zip" -CompressionLevel Optimal
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Era.js-SDK v$DATE
           tag_name: v$DATE
+          release_name: Era.js-SDK v$DATE
+          body_path: README.md
           draft: true
-          files: "*.zip" 
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: v$DATE
-      #     release_name: Era.js-SDK v$DATE
-      #     body: |
-      #       Changes in this Release
-      #       - First Change
-      #       - Second Change
-      #     draft: true
-      #     prerelease: false
+          prerelease: false
 
-      # - name: Upload Release Asset
-      #   uses: softprops/action-gh-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     files: Era.js-SDK v$DATE.zip
-          # upload_url: ${{ steps.create_release.outputs.upload_url }}
-          # asset_path: "Era.js-SDK v$DATE.zip"
-          # asset_name: "Era.js-SDK v$DATE.zip"
-          # asset_content_type: application/zip
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "Era.js-SDK amd64.zip"
+          asset_name: "Era.js-SDK amd64.zip"
+          asset_content_type: application/zip
 
   Windows-x86:
     runs-on: windows-latest
