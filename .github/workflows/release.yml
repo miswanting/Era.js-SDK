@@ -50,6 +50,7 @@ jobs:
           $date = Get-Date -Format "yyddMM"
           echo "::set-env name=DATE::$date"
           Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK amd64.zip" -CompressionLevel Optimal
+          Write-Output "$DATE"
 
       - name: Create Release
         id: create_release
@@ -57,8 +58,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "v$DATE"
-          release_name: "Era.js-SDK v$DATE"
+          tag_name: v$DATE
+          release_name: Era.js-SDK v$DATE
           body_path: Era.js-SDK\CHANGELOG.md
           draft: true
           prerelease: false
