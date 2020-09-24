@@ -26,7 +26,6 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: "14"
-          check-latest: true
 
       - name: Setup Python 3 Enviroment
         uses: actions/setup-python@v2
@@ -34,7 +33,7 @@ jobs:
           python-version: "3.8"
           architecture: "x64"
 
-      - name: Setup Front-End Enviroment
+      - name: Prebuild Front-End
         run: |
           cd Era.js\Next\FrontEnd
           npm run setup
@@ -44,7 +43,7 @@ jobs:
         run: |
           mkdir Era.js-SDK\erajs
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
-          Remove-Item Era.js-SDK\prebuilt\* -Recurse
+          Remove-Item Era.js-SDK\prebuilt\*.* -Recurse
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked\ Era.js-SDK\prebuilt\ /E
           $date = Get-Date -Format "yyddMM"
           Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-v$date.zip -CompressionLevel Optimal
