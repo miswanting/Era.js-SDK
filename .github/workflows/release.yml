@@ -40,6 +40,8 @@ jobs:
           npx electron-builder --dir
 
       - name: Assemble SDK
+        env:
+          DATE: ${{ Get-Date -Format "yyddMM" }}
         run: |
           mkdir Era.js-SDK\erajs
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
@@ -48,6 +50,7 @@ jobs:
           $env:date = Get-Date -Format "yyddMM"
           Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK v${{ env.date }}.zip" -CompressionLevel Optimal
           Write-Output "Era.js-SDK v${{ env.date }}.zip"
+          Write-Output "Era.js-SDK v${{ env.DATE }}.zip"
 
       - name: Create Release
         id: create_release
@@ -70,8 +73,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: Era.js-SDK-v${{ env.date }}.zip
-          asset_name: Era.js-SDK-v${{ env.date }}.zip
+          asset_path: Era.js-SDK v${{ env.date }}.zip
+          asset_name: Era.js-SDK v${{ env.date }}.zip
           asset_content_type: application/zip
 
   Windows-x86:
