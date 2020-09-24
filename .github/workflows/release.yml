@@ -48,6 +48,7 @@ jobs:
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked\ Era.js-SDK\prebuilt\ /E
           echo ${{ github.sha }}
           Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-${{ github.sha }}.zip -CompressionLevel Optimal
+          tree
 
       - name: Create Release
         id: create_release
