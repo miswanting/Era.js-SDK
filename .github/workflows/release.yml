@@ -46,8 +46,8 @@ jobs:
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
           Remove-Item Era.js-SDK\prebuilt\*
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked\ Era.js-SDK\prebuilt\ /E
-          echo ${{ github.ref }}
-          Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-${{ github.ref }}.zip -CompressionLevel Optimal
+          echo ${{ github.sha }}
+          Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-${{ github.sha }}.zip -CompressionLevel Optimal
 
       - name: Create Release
         id: create_release
@@ -70,8 +70,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: Era.js-SDK-${{ github.ref }}.zip
-          asset_name: Era.js-SDK-${{ github.ref }}.zip
+          asset_path: Era.js-SDK-${{ github.sha }}.zip
+          asset_name: Era.js-SDK-${{ github.sha }}.zip
           asset_content_type: application/zip
 
   Windows-x86:
