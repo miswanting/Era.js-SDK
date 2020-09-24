@@ -23,7 +23,7 @@ jobs:
           path: Era.js-SDK
 
       - name: Setup Node.js Enviroment
-      - uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2-beta
         with:
           node-version: "14"
           check-latest: true
