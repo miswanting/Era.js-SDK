@@ -44,7 +44,7 @@ jobs:
           mkdir Era.js-SDK\erajs
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
           Remove-Item Era.js-SDK\prebuilt\*.* -Recurse
-          xcopy Era.js\Next\FrontEnd\dist\win-unpacked\ Era.js-SDK\prebuilt\ /E
+          xcopy Era.js\Next\FrontEnd\dist\win-unpacked Era.js-SDK\prebuilt\ /E
           $date = Get-Date -Format "yyddMM"
           Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-v$date.zip -CompressionLevel Optimal
 
@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: Era.js-SDK v$date
           body: |
             Changes in this Release
             - First Change
