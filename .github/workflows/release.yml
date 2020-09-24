@@ -2,8 +2,6 @@ name: Release Bot
 
 on:
   push:
-    tag:
-      - v*
     branches:
       - master
       - dev
@@ -59,7 +57,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v$DATE
-          release_name: Era.js-SDK v$DATE
+          release_name: Era.js-SDK v${{ env.date }}
           body_path: Era.js-SDK\CHANGELOG.md
           draft: true
           prerelease: false
