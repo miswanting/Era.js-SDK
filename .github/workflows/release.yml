@@ -50,7 +50,7 @@ jobs:
           $date = Get-Date -Format "yyddMM"
           echo "::set-env name=RELEASE_DATE::$date"
           echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
-          Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK v${{ env.RELEASE_DATE }}.zip" -CompressionLevel Optimal
+          Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK-${{ env.RELEASE_VERSION }}+${{ env.RELEASE_DATE }}.zip" -CompressionLevel Optimal
 
       - name: Create Release
         id: create_release
@@ -58,8 +58,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.RELEASE_DATE }}
-          release_name: Era.js-SDK v${{ env.RELEASE_DATE }}
+          tag_name: ${{ env.RELEASE_VERSION }}+${{ env.RELEASE_DATE }}
+          release_name: Era.js-SDK ${{ env.RELEASE_VERSION }}+${{ env.RELEASE_DATE }}
           body_path: Era.js-SDK\CHANGELOG.md
           draft: true
           prerelease: false
@@ -70,8 +70,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "Era.js-SDK v${{ env.RELEASE_DATE }}.zip"
-          asset_name: "Era.js-SDK v${{ env.RELEASE_DATE }}.zip"
+          asset_path: "Era.js-SDK-${{ env.RELEASE_VERSION }}+${{ env.RELEASE_DATE }}.zip"
+          asset_name: "Era.js-SDK-${{ env.RELEASE_VERSION }}+${{ env.RELEASE_DATE }}.zip"
           asset_content_type: application/zip
 
   Windows-x86:
