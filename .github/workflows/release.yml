@@ -57,7 +57,7 @@ jobs:
           name: Era.js-SDK v$DATE
           tag_name: v$DATE
           draft: true
-          files: *.zip
+          files: "*.zip"
       #   id: create_release
       #   uses: actions/create-release@v1
       #   env:
