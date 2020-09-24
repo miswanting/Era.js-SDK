@@ -32,8 +32,10 @@ jobs:
           path: Era.js-SDK
 
       - name: Setup Node.js Enviroment
+        run: dir
 
       - name: Setup Python 3 Enviroment
+        run: dir
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
