@@ -67,14 +67,15 @@ jobs:
           prerelease: false
 
       - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "Era.js-SDK v$DATE.zip"
-          asset_name: "Era.js-SDK v$DATE.zip"
-          asset_content_type: application/zip
+          files: Era.js-SDK v$DATE.zip
+          # upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # asset_path: "Era.js-SDK v$DATE.zip"
+          # asset_name: "Era.js-SDK v$DATE.zip"
+          # asset_content_type: application/zip
 
   Windows-x86:
     runs-on: windows-latest
