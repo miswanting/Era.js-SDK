@@ -57,9 +57,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v$DATE
-          release_name: Era.js-SDK v$DATE
-          body_path: Era.js-SDK\README.md
+          tag_name: "v$DATE"
+          release_name: "Era.js-SDK v$DATE"
+          body_path: Era.js-SDK\CHANGELOG.md
           draft: true
           prerelease: false
 
