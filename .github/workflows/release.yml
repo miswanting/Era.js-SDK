@@ -43,13 +43,13 @@ jobs:
 
       - name: Assemble SDK
         run: |
+          $date = Get-Date -Format "yyMMdd"
+          echo "::set-env name=RELEASE_DATE::$date"
+          echo "::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}"
           mkdir Era.js-SDK\erajs
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
           Remove-Item Era.js-SDK\prebuilt\*.* -Recurse
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked Era.js-SDK\prebuilt\ /E
-          $date = Get-Date -Format "yyMMdd"
-          echo "::set-env name=RELEASE_DATE::$date"
-          echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
           Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK-${{ env.RELEASE_VERSION }}+$date.zip" -CompressionLevel Optimal
           dir
 
