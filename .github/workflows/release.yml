@@ -52,26 +52,32 @@ jobs:
           Write-Output "$DATE"
 
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v$DATE
-          release_name: Era.js-SDK v$DATE
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: true
-          prerelease: false
-
-      - name: Upload Release Asset
         uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: Era.js-SDK v$DATE.zip
+          name: Era.js-SDK v$DATE
+          tag_name: v$DATE
+          draft: true
+          files: *.zip
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: v$DATE
+      #     release_name: Era.js-SDK v$DATE
+      #     body: |
+      #       Changes in this Release
+      #       - First Change
+      #       - Second Change
+      #     draft: true
+      #     prerelease: false
+
+      # - name: Upload Release Asset
+      #   uses: softprops/action-gh-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     files: Era.js-SDK v$DATE.zip
           # upload_url: ${{ steps.create_release.outputs.upload_url }}
           # asset_path: "Era.js-SDK v$DATE.zip"
           # asset_name: "Era.js-SDK v$DATE.zip"
