@@ -46,10 +46,10 @@ jobs:
           Remove-Item Era.js-SDK\prebuilt\*.* -Recurse
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked Era.js-SDK\prebuilt\ /E
           $date = Get-Date -Format "yyddMM"
-          echo ::set-env name=date::$date
+          echo "::set-env name=DATE::$date"
           Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK v${{ env.date }}.zip" -CompressionLevel Optimal
-          Write-Output "Era.js-SDK v${{ env.date }}.zip"
           Write-Output "Era.js-SDK v${{ env.DATE }}.zip"
+          Write-Output "$DATE"
 
       - name: Create Release
         id: create_release
