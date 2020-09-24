@@ -59,7 +59,7 @@ jobs:
         with:
           tag_name: v$DATE
           release_name: Era.js-SDK v$DATE
-          body_path: README.md
+          body_path: Era.js-SDK\README.md
           draft: true
           prerelease: false
 
