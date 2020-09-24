@@ -39,21 +39,39 @@ jobs:
           cd Era.js\Next\FrontEnd
           npm run setup
           npx electron-builder --dir
-          dir
-          tree
-
-      - name: Setup Back-End Enviroment
-        run: |
-          cd Era.js\Next\BackEnd
-          python setup.py build
-          dir
-          tree
 
       - name: Assemble SDK
-        run: echo
+        run: |
+          mkdir Era.js-SDK\erajs
+          xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
+          del /Q Era.js-SDK\prebuilt\*
+          xcopy Era.js\Next\FrontEnd\dist\win-unpacked\ Era.js-SDK\prebuilt\ /E
+          powershell Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-${{ github.ref }}.zip -CompressionLevel Optimal
 
-      - name: Release
-        run: echo
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: true
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: Era.js-SDK-${{ github.ref }}.zip
+          asset_name: Era.js-SDK-${{ github.ref }}.zip
+          asset_content_type: application/zip
 
   Windows-x86:
     runs-on: windows-latest
