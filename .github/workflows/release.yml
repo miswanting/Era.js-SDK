@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir Era.js-SDK\erajs
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
-          Remove-Item Era.js-SDK\prebuilt\*
+          Remove-Item Era.js-SDK\prebuilt\* -Recurse
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked\ Era.js-SDK\prebuilt\ /E
           echo ${{ github.sha }}
           Compress-Archive -Path Era.js-SDK\* -DestinationPath Era.js-SDK-${{ github.sha }}.zip -CompressionLevel Optimal
