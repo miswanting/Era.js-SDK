@@ -70,5 +70,5 @@ jobs:
 
       - name: Setup Python 3 Enviroment
         run: dir
-  Release Linux x64:
-  Release Linux x32:
+  # Release Linux x64:
+  # Release Linux x32:
