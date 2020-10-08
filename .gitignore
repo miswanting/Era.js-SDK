@@ -129,4 +129,6 @@ dmypy.json
 .pyre/
 
 # Custom
+prebuilt
+!prebuilt/README.md
 erajs
