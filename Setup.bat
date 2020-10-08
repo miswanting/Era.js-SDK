@@ -7,7 +7,7 @@ echo Press ANY Button to Continue.
 pause
 cls
 echo Extract: Prebuilts
-PowerShell Expand-Archive -LiteralPath prebuilt/prebuilt.zip -DestinationPath prebuilt -Force
+REM PowerShell Expand-Archive -LiteralPath prebuilt/prebuilt.zip -DestinationPath prebuilt -Force
 REM rm prebuilt/prebuilt.zip
 echo Dependence: Python Requirements
 pip install -r requirements.txt 
