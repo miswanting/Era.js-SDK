@@ -97,7 +97,7 @@ def cover():
     a.b('　　　模组教程　　　', a.goto, ui_mod)
     a.t()
     a.t()
-    a.b('　　　退出教程　　　',  a.exit)
+    a.b('　　　退出教程　　　',  a.msg, '右上角嘛~   真是的！')
     a.t()
 
 
@@ -431,9 +431,14 @@ def ui_data():
 
 def ui_code():
     a.page()
-    a.h('数据管理教程')
+    a.mode('grid', 1)
+    a.h('代码组织教程')
     a.t()
-    a.t('游戏的静态数据都保存在【data/】目录中，只要放进去了，且格式匹配，就可以在游戏开始后直接调用。如：')
+    a.t()
+    a.t('和以前是一样的嘛！')
+    a.t()
+    a.t()
+    a.b('也就是说还没写咯？', a.back)
 
 
 def ui_mod():
