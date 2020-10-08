@@ -85,16 +85,16 @@ def cover():
     a.b('　　　控件教程　　　', a.goto, ui_widgets)
     a.t()
     a.t()
-    a.b('　　　排版教程　　　', a.goto, ui_mode)
+    a.b('　　　排版教程　　　', a.goto, ui_compose)
     a.t()
     a.t()
-    a.b('　　　数据教程　　　', a.goto, ui_data)
+    a.b('　　数据管理教程　　', a.goto, ui_data)
     a.t()
     a.t()
     a.b('　　代码组织教程　　', a.goto, ui_code)
     a.t()
     a.t()
-    a.b('　　 ＭＯＤ教程 　　', a.goto, ui_mod)
+    a.b('　　　模组教程　　　', a.goto, ui_mod)
     a.t()
     a.t()
     a.b('　　　退出教程　　　',  a.exit)
@@ -146,30 +146,292 @@ def ui_logic():
 
 
 def ui_widgets():
-    pass
+    def button_result():
+        a.msg('按钮已按下')
+
+    def rate_result(new_rate):
+        a.msg('您的评分为{}分。'.format(new_rate))
+
+    def radio_result(new_ratio):
+        a.msg('现在选中的是第{}位的“{}”。'.format(
+            new_ratio['index'], new_ratio['value']
+        ))
+
+    def check_result(new_check):
+        a.msg('现在复选框的值为：{}'.format(new_check))
+
+    def input_result(new_input):
+        a.msg('输入框中的文本为：{}'.format(new_input))
+
+    def dropdown_result(new_dropdown):
+        a.msg('下拉菜单中的值为第{}位的“{}”。'.format(
+            new_dropdown['index'], new_dropdown['value']
+        ))
+    a.page()
+    a.h('控件一览', 1, {'color': '#eee'})
+    a.mode('line')
+    a.t('【我是几个文字】')
+    a.t('【我跟在左边文字后面】')
+    a.t()  # 换行
+    a.t('【我被换行了……】')
+    a.t('而我有色彩', style={'color': '#f00', 'background-color': '#0f0'})
+    a.t()  # 再换行
+    a.t('【当你看见我时，你需要点鼠标左键或右键】', True)
+    a.t()  # 再换行
+    a.t('【当你看见我时，你还是需要点鼠标左键或右键】', True)
+    a.t()  # 再换行
+    a.b('我是一个红按钮',  button_result, style={'background-color': '#f00'})
+    a.b('我是一个不能按的按钮', button_result,  disabled=True)
+    a.b('快拿鼠标指着我！', button_result, popup='被你戳到了，好爽~')
+    a.divider('我是显而易见的分割线')
+    a.t('作为进度条，我当前值为50，总共100，在界面上显示为 100px 长：')
+    a.progress(50, 100, [{'width': '100px'}, {}])
+    a.t()
+    a.t('如果给这个游戏引擎评分，5分满分，我目前给4分：')
+    a.rate(4, 5)
+    a.t()
+    a.t('我是一个可以点的评分哦~点击之后请在后端控制台查看效果~（对着当前评分再点击一次可以取消评分哦~（等价于评0分））：')
+    a.rate(2, 5, rate_result)
+    a.t()
+    a.t('我是一个单选，目前默认选中第二项（索引为1）修改之后请在后端控制台查看效果:')
+    a.radio(['一', '二', '三'], radio_result, 1)
+    a.t()
+    a.t('我是一个复选框，目前默认已选中，修改之后请在后端控制台查看效果:')
+    a.check('我是一个复选框哦！', check_result, True)
+    a.t()
+    a.t('我是输入框，修改之后请在后端控制台查看效果:')
+    a.input(input_result, '我是默认值哦~')
+    a.t()
+    a.t('多行文本输入框：TODO')
+    a.t()
+    a.t('我是一个下拉菜单哦！（下拉选择项目并在后端查看效果）:')
+    a.dropdown(['甲', '乙', '丙'], dropdown_result, 1)
+    a.t()
+    a.t('多选下拉菜单：TODO')
+    a.t()
+    a.t('以上，就是目前支持的全部控件及用法啦~')
+    a.t()
+    a.t('如果您需要新增，请跟作者联系哦~')
+    a.t()
+    a.b('返回', a.back)
 
 
-def ui_mode():
-    pass
+def ui_compose():
+    def ui_line_mode():  # 默认模式（左对齐）
+        a.page()
+        a.mode()
+        a.h('一、默认排版（左对齐）')
+        a.t()
+        a.t('由a.mode()切换排版模式。当前是默认排版，所有控件从左往右排列，使用a.t()进行换行。')
+        a.divider()
+        a.t('【普通文字】')
+        a.t('【未换行】')
+        a.t()
+        a.t('【已换行】')
+        a.t()
+        a.t()
+        a.divider()
+        a.b('下一页', ui_grid_mode)
+        a.t()
+        a.t()
+        a.b('返回', a.back)
+
+    def ui_grid_mode():  # 网格模式（三列）
+        a.page()
+        a.h('二、网格模式（三列）')
+        a.t()
+        a.t('由a.mode("grid", 3)切换到3列的网格模式，单元格内不支持换行，换行a.t()在这里代表的是换下一单元格。')
+        a.divider()
+        a.mode('grid', 3)
+        a.t('【文字】')
+        a.t('【同单元格的文字】')
+        a.t()
+        a.t('【下一单元格的文字】')
+        a.t()
+        a.t('【摩多摩多】')
+        a.t()
+        a.t('【摩多摩多】')
+        a.t()
+        a.divider()
+        a.mode()
+        a.b('下一页', ui_center_mode)
+        a.t()
+        a.b('返回', a.back)
+
+    def ui_center_mode():  # 网格模式的特殊用法（单列居中）
+        a.page()
+        a.h('三、网格模式的特殊用法（单列居中）')
+        a.t()
+        a.t('由a.mode()切换排版模式。当前是默认排版，所有控件从左往右排列，使用a.t()进行换行。')
+        a.divider()
+        a.mode('grid', 1)
+        graph = [
+            '墙墙窗窗墙墙窗窗墙墙',
+            '墙　　　　　　　　门',
+            '墙　　　　　　　　墙',
+            '墙汉汉汉汉　　　　墙',
+            '墙　　　汉　　　　墙',
+            '墙皂我　汉　　　　墙',
+            '墙　　　汉　　　　门',
+            '墙墙墙墙墙墙墙墙墙墙',
+        ]
+        for line in graph:
+            a.t(line)
+            a.t()
+        a.t()
+        a.divider()
+        a.mode()
+        a.b('返回', a.back)
+    ui_line_mode()
 
 
 def ui_data():
-    pass
+    def ui_support_file_format():
+        a.page()
+        a.h('支持的数据文件格式列表')
+        a.t()
+        a.t()
+        a.t('配置文件：*.inf, *.ini, *.cfg, *.config')
+        a.t()
+        a.t('配置文件的基本格式均为【变量名】=【数据】的格式，适用于存储简单的、易于玩家修改的配置数据。')
+        a.t()
+        a.t('表格文件：*.csv')
+        a.t()
+        a.t('CSV文件可以被常见的表格程序打开，但其本身不支持任何排版，若需要储存大量二维数据可以考虑这个方法。十分利于开发者进行编辑修改。')
+        a.t()
+        a.t('JSON文件：*.json')
+        a.t()
+        a.t('JSON文件易于储存结构化的数据，系统读写速度非常快，但面向开发者的可读性要稍差一点。')
+        a.t()
+        a.t('YAML文件：*.yaml, *.yml')
+        a.t()
+        a.t('YAML文件和JSON文件类似，适用于储存、输入结构化的数据，系统读写速度没有JSON快，但面向开发者的可读性特别高，推荐使用。')
+        a.t()
+        a.t('ZIP文件：*.zip')
+        a.t()
+        a.t('ZIP文件是常见的容器文件，里面的文件格式均为JSON，能够整合多个数据文件，方便与其他玩家共享数据时使用。')
+        a.t()
+        a.t('文本文件：*.txt')
+        a.t()
+        a.t('最常见的文本文件，读取之后的数据结构为列表，每一行就是列表中的一项，用法全看开发者如何打算。')
+        a.t()
+        a.t('存档文件：*.save, *.sav')
+        a.t()
+        a.t('Era.js游戏引擎特有的存档文件，没有什么特别的东西需要介绍的。')
+        a.t()
+        a.t()
+        a.b('返回', a.back)
+
+    def ui_call_data():
+        a.page()
+        a.h('数据调用')
+        a.t()
+        a.t()
+        a.h('调用配置文件', 3)
+        a.t()
+        a.t('配置文件放在【config/】文件夹中，通过a.cfg()函数进行调用。')
+        a.t()
+        a.t()
+        a.h('调用静态数据文件', 3)
+        a.t()
+        a.t('数据文件放在【data/】文件夹中，通过a.dat()函数进行调用。')
+        a.t()
+        a.t()
+        a.h('调用可存档数据', 3)
+        a.t()
+        a.t('可存档数据是指通过a.sav()函数进行增删查改的数据，而“存档文件”可以理解为“可存档数据”的一个“快照”。当我们进行“保存游戏”的操作时，游戏引擎会将“可存档数据”进行全拷贝并自动生成“存档文件”存放在【save/】文件夹中，而当我们读取存档时，游戏引擎读取“存档文件”中的数据并对“可存档数据”进行完全覆盖。')
+        a.t()
+        a.t('出于非技术原因，我们约定，可存档数据中的数据不包括Python的对象（如函数、类等）。',
+            style={'color': 'white'})
+        a.t()
+        a.t()
+        a.h('调用临时数据', 3)
+        a.t()
+        a.t('“临时数据”是指游戏运行时生成、供全局调用、但无需保存进存档文件的数据。可通过a.tmp()函数进行调用。当全局数据不知道放哪儿时，放这里准没错。')
+        a.t()
+        a.t()
+        a.b('返回', a.back)
+
+    def ui_save_data():
+        a.page()
+        a.h('存档数据管理')
+        a.t()
+        a.t()
+        a.h('保存存档', 3)
+        a.t()
+        a.t('使用a.save()函数可以直接保存存档，详情请参见API。')
+        a.t()
+        a.t()
+        a.h('加载存档', 3)
+        a.t()
+        a.t('使用a.load()函数可以直接加载存档，详情请参见API。')
+        a.t()
+        a.t()
+        a.h('保存存档预设控件', 3)
+        a.t()
+        a.t('引擎提供了一个预设控件函数a.widget_save()，让你可以生成一个块级控件')
+        a.t()
+        a.t()
+        a.h('加载存档预设控件', 3)
+        a.t()
+        a.t('a.widget_load()')
+        a.t()
+        a.t()
+        a.h('保存存档预设界面', 3)
+        a.t()
+        a.t('a.ui_save()')
+        a.t()
+        a.t()
+        a.h('加载存档预设界面', 3)
+        a.t()
+        a.t('a.ui_load()')
+        a.t()
+        a.t()
+        a.b('返回', a.back)
+    a.page()
+    a.mode()
+    a.h('数据管理教程')
+    a.t()
+    a.t()
+    a.t('在v0.2中，数据系统与v0.1相比，有了较大改变，我们来逐项说明。')
+    a.t()
+    a.t('引擎支持的数据文件格式参见：')
+    a.b('格式列表', a.goto, ui_support_file_format)
+    a.t()
+    a.t('调用文件的API进行了变更，参见：')
+    a.b('数据调用', a.goto, ui_call_data)
+    a.t()
+    a.t('新版引擎对存档的支持进行了增强，参见：')
+    a.b('存档数据管理', a.goto, ui_save_data)
+    a.t()
+    a.t()
+    a.b('返回', a.back)
 
 
 def ui_code():
-    pass
+    a.page()
+    a.h('数据管理教程')
+    a.t()
+    a.t('游戏的静态数据都保存在【data/】目录中，只要放进去了，且格式匹配，就可以在游戏开始后直接调用。如：')
 
 
 def ui_mod():
-    pass
+    def rest():
+        a.msg('我会很快搞定的，等我！')
+        a.back()
+    a.page()
+    a.mode('grid', 1)
+    a.h('我还没想好怎么写教程……')
+    a.t()
+    a.t()
+    a.b('我先暂时不用吧', rest)
 
 
 # ---------分割线---------
 # 第一章 第二节 最简单的页面有多简单？
 # 欢迎回来！现在请让我向你展示一个最简单的界面！请看好：
 a.init()
-a.b('进入向导', cover)
+a.b('进入向导', a.goto, cover)
 # 完成！
 # 怎样？是不是觉得特别简单？确实就是如此简单！
 # 这两行代码做的事情很简单：
