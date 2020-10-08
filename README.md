@@ -8,7 +8,6 @@
     <a href="https://github.com/miswanting/Era.js/issues">FAQ</a>
 </div>
 
-
 <h1 align="center">Era.js SDK</h1>
 <div align="center">Latest Version: v0.2.0-α</div>
 ## Overview
@@ -45,3 +44,5 @@ git clone https://github.com/miswanting/Era.js --depth 1
 ## Develop
 
 ## Package
+
+`Package.bat` to package.
