@@ -457,6 +457,13 @@ def ui_mod():
 # 第一章 第二节 最简单的页面有多简单？
 # 欢迎回来！现在请让我向你展示一个最简单的界面！请看好：
 a.init()
+
+
+def parser(cmd):
+    return cmd+'!'
+
+
+a.set_console_parser(parser)
 a.b('进入向导', a.goto, cover)
 # 完成！
 # 怎样？是不是觉得特别简单？确实就是如此简单！
