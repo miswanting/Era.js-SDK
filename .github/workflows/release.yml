@@ -2,14 +2,21 @@ name: Release Bot
 
 on:
   push:
-    branches:
-      - master
+    tags: [v*]
 
 jobs:
   Windows-x64:
     runs-on: windows-latest
 
     steps:
+      - name: Get Build Info
+        id: info
+        shell: bash
+        run: |
+          d=`date +%Y%m%d`
+          echo ::set-output name=DATE::${d:2:6}
+          echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
+
       - name: Checkout Era.js
         uses: actions/checkout@v2
         with:
@@ -40,14 +47,11 @@ jobs:
 
       - name: Assemble SDK
         run: |
-          $date = Get-Date -Format "yyMMdd"
-          echo "::set-env name=RELEASE_DATE::$date"
-          echo "::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}"
           mkdir Era.js-SDK\erajs
           xcopy Era.js\Next\BackEnd\erajs Era.js-SDK\erajs\ /E
           Remove-Item Era.js-SDK\prebuilt\*.* -Recurse
           xcopy Era.js\Next\FrontEnd\dist\win-unpacked Era.js-SDK\prebuilt\ /E
-          Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js-SDK-v$date.x64.zip" -CompressionLevel Optimal
+          Compress-Archive -Path Era.js-SDK\* -DestinationPath "Era.js SDK ${{ steps.info.outputs.TAG_NAME }}+${{ steps.info.outputs.DATE }}.windows-x64.zip" -CompressionLevel Optimal
 
       - name: Create Release
         id: create_release
@@ -55,8 +59,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.RELEASE_DATE }}
-          release_name: Era.js-SDK v${{ env.RELEASE_DATE }}
+          tag_name: ${{ steps.info.outputs.TAG_NAME }}
+          release_name: Era.js SDK ${{ steps.info.outputs.TAG_NAME }}+${{ steps.info.outputs.DATE }}
           body_path: Era.js-SDK\CHANGELOG.md
           draft: true
           prerelease: false
@@ -67,29 +71,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "Era.js-SDK-v${{ env.RELEASE_DATE }}.x64.zip"
-          asset_name: "Era.js-SDK-v${{ env.RELEASE_DATE }}.x64.zip"
+          asset_path: "Era.js SDK ${{ steps.info.outputs.TAG_NAME }}+${{ steps.info.outputs.DATE }}.windows-x64.zip"
+          asset_name: "Era.js-SDK ${{ steps.info.outputs.TAG_NAME }}+${{ steps.info.outputs.DATE }}.windows-x64.zip"
           asset_content_type: application/zip
-
-  Windows-x86:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout Era.js
-        uses: actions/checkout@v2
-        with:
-          repository: miswanting/Era.js
-          path: Era.js
-
-      - name: Checkout Era.js-SDK
-        uses: actions/checkout@v2
-        with:
-          path: Era.js-SDK
-
-      - name: Setup Node.js Enviroment
-        run: dir
-
-      - name: Setup Python 3 Enviroment
-        run: dir
-  # Release Linux x64:
-  # Release Linux x32:
